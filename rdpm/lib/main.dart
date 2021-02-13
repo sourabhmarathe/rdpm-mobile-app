@@ -44,6 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedDate = picked;
       });
   }
+
+  Future<Null> _translateDate(BuildContext context) async {
+    print("Attempt translate");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               onPressed: () => _selectDate(context),
               child: Text('Select date'),
+            ),
+            RaisedButton(
+              onPressed: () => _translateDate(context),
+              child: Text('Translate date'),
             ),
           ],
         ),
