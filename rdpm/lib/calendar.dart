@@ -185,3 +185,39 @@ double IndianCivilToJDN(SakaStruct date) {
   return jdn;
 
 }
+
+DateTime convertToGregorianDate(SakaStruct dt) {
+  int day = dt.day;
+  int month = dt.month;
+  int year = dt.year;
+
+  if (year < 79) {
+    print('This date is before the start of Saka year 1.\n'
+        'Try 22 Mar 79 onwards');
+  }
+  else if (year == 79 && month < 4 && day < 22) {
+    print('This date is before the start of Saka year 1.\n'
+        'Try 22 Mar 79 onwards');
+  }
+
+  double jdn = IndianCivilToJDN(dt);
+  return JDNToGregorian(jdn);
+}
+
+SakaStruct convertToSakaDate(DateTime dt) {
+  int day = dt.day;
+  int month = dt.month;
+  int year= dt.year;
+
+  if (year < -79) {
+    print('This date is before the start of Gregorian year 1.\n'
+        'Try 10 \u092a\u094c\u0937  -79 onwards');
+  }
+  else if (year == -79 && month < 11 && day < 10) {
+    print('This date is before the start of Gregorian year 1.\n'
+        'Try 10 \u092a\u094c\u0937  -79 onwards');
+  }
+
+  double jdn = GregorianToJDN(dt);
+  return JDNToIndianCivil(jdn);
+}
