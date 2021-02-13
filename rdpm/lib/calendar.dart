@@ -6,7 +6,6 @@
 * */
 import 'dart:math';
 
-import 'dateStruct.dart';
 import 'sakaStruct.dart';
 
 int trunc(double val) {
@@ -18,13 +17,13 @@ int trunc(double val) {
 }
 
 // Modulus function that works for non-integers
-int mod(int a, double b) {
-  return a - (b.floor() * (a/b).floor());
+int mod(double a, int b) {
+  return (a.floor() - (b.floor() * (a/b).floor())).floor();
 }
 
 // Return day of the week
 int dow(double jdn) {
-  return mod((jdn + 1.5).floor(), 7);
+  return mod((jdn + 1.5).floor().toDouble(), 7);
 }
 
 // Return if a year is a leap year in Gregorian
@@ -34,15 +33,18 @@ bool isGregorianLeapYear(int year) {
 
 // Return JDN for a given Gregorian DateTime object
 double gregorianToJDN(DateTime dt) {
-  double jd = 0;
   int month = dt.month;
   int year = dt.year;
   int day = dt.day;
+
+  double jd = 0;
 
   if(dt.month < 3) {
     month += 12;
     year -= 1;
   }
+
+  // calculate Chronological Julian Day
   jd = day + (((153 * month) - 457) / 5) + (365 * year) + trunc(year / 4)
       - trunc(year / 100) + trunc(year / 400) + 1721118.5;
   jd += .5;
@@ -50,7 +52,6 @@ double gregorianToJDN(DateTime dt) {
 }
 
 DateTime JDNToGregorian(double jd) {
-  DateStruct date;
   double g, r;
   int z, a, b, c, d, m, y;
 
@@ -65,7 +66,7 @@ DateTime JDNToGregorian(double jd) {
   y = ((b + g).floor()/365.25).floor();
   c = b + z - (365.25 * y).floor();
   m = trunc(((5 * c) + 456) / 153);
-  d = (c - trunc(((153 * m) - 457) / 5) + r).floor();
+  d = (c - trunc(((153 * m) - 457) / 5) + r).round();
   if (m > 12)
   {
     y += 1;
@@ -114,7 +115,7 @@ SakaStruct JDNToIndianCivil(double jdn) {
   date.year = greg.year - saka;            // Tentative year in Saka era
   greg_jdn = GregorianToJDN(greg); // jdn at start of Gregorian year
   //TODO: Check if yday is correctly calculated
-  yday = (jdn - greg_jdn).floor(); // Day number (0 based) in Gregorian year
+  yday = (jdn - greg_jdn).round(); // Day number (0 based) in Gregorian year
   caitra = date.leap ? 31 : 30;          // Days in Caitra this year
 
   if (yday < start)
@@ -148,7 +149,6 @@ SakaStruct JDNToIndianCivil(double jdn) {
 }
 
 double IndianCivilToJDN(SakaStruct date) {
-  // params: month, day year
   int day = date.day;
   int month = date.month;
   int year = date.year;

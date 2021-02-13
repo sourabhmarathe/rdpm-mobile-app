@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'calendar.dart';
+import 'sakaStruct.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Welcome to the RPDM Mobile App'),
     );
   }
 }
@@ -32,23 +33,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  DateTime selectedDate = DateTime.now();
+  DateTime gregorianDate = DateTime.now();
+  SakaStruct sakaDate;
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: gregorianDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != gregorianDate)
       setState(() {
-        selectedDate = picked;
+        gregorianDate = picked;
       });
   }
 
-  Future<Null> _translateDate(BuildContext context) async {
+  void _translateDate(BuildContext context) {
     print("Attempt translate");
+    setState(() {
+      sakaDate = convertToSakaDate(gregorianDate);
+    });
   }
 
 
@@ -62,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("${selectedDate.toLocal()}".split(' ')[0]),
+            Text("${gregorianDate.toLocal()}".split(' ')[0]),
             SizedBox(height: 20.0,),
             RaisedButton(
               onPressed: () => _selectDate(context),
@@ -72,10 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => _translateDate(context),
               child: Text('Translate date'),
             ),
+            Text("${sakaDate.toString()}"),
           ],
         ),
       ),
     );
   }
-
 }

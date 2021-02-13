@@ -29,6 +29,10 @@ class SakaStruct {
     this._year = new_year;
   }
 
+  get weekday {
+    return this._weekday;
+  }
+
   set weekday(int dow) {
     this._weekday = dow;
   }
@@ -39,5 +43,53 @@ class SakaStruct {
 
   set leap(bool isLeapYear) {
     this._leap = isLeapYear;
+  }
+
+  String toString() {
+    //TODO: Check if the date is valid
+    String dateStr;
+
+    switch(this.month) {
+      case 1:
+        dateStr += "Chaitra ";
+        break;
+      case 2:
+        dateStr += "Vaisakha ";
+        break;
+      case 3:
+        dateStr += "Jyēshtha";
+        break;
+      case 4:
+        dateStr += "Āshādha";
+        break;
+      case 5:
+        dateStr += "Shrāvana";
+        break;
+      case 6:
+        dateStr += "Bhaadra";
+        break;
+      case 7:
+        dateStr += "Āshwin";
+        break;
+      case 8:
+        dateStr += "Kārtika";
+        break;
+      case 9:
+        dateStr += "Agrahayana";
+        break;
+      case 10:
+        dateStr = "Pausha";
+        break;
+      case 11:
+        dateStr += "Magha";
+        break;
+      case 12:
+        dateStr += "Phalguna";
+        break;
+      default:
+        break;
+    }
+
+    return dateStr + " " + this._day.toString() + ", " + this._year.toString();
   }
 }
