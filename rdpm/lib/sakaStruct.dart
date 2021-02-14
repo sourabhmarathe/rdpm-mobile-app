@@ -5,6 +5,30 @@ class SakaStruct {
   int _weekday = 0;
   bool _leap = false;
 
+  List<String> _months = [
+    "Chhaitra",
+    "Vaishakha",
+    "Jyeshtha",
+    "Ashadha",
+    "Shravana",
+    "Bhaadra",
+    "Ashwin",
+    "Kartika",
+    "Agrahayana",
+    "Pausha",
+    "Magha",
+    "Phalguna"
+  ];
+  List<String> _daysOfWeek = [
+    "Raivara",
+    "Somvara",
+    "Mangalvara",
+    "Budhvara",
+    "Brahaspativara",
+    "Sukravara",
+    "Sanivara"
+  ];
+
   int get day {
     return this._day;
   }
@@ -45,51 +69,17 @@ class SakaStruct {
     this._leap = isLeapYear;
   }
 
+  List<String> months() {
+    return this._months;
+  }
+
   String toString() {
-    //TODO: Check if the date is valid
-    String dateStr;
-
-    switch(this.month) {
-      case 1:
-        dateStr += "Chaitra ";
-        break;
-      case 2:
-        dateStr += "Vaisakha ";
-        break;
-      case 3:
-        dateStr += "Jyēshtha";
-        break;
-      case 4:
-        dateStr += "Āshādha";
-        break;
-      case 5:
-        dateStr += "Shrāvana";
-        break;
-      case 6:
-        dateStr += "Bhaadra";
-        break;
-      case 7:
-        dateStr += "Āshwin";
-        break;
-      case 8:
-        dateStr += "Kārtika";
-        break;
-      case 9:
-        dateStr += "Agrahayana";
-        break;
-      case 10:
-        dateStr = "Pausha";
-        break;
-      case 11:
-        dateStr += "Magha";
-        break;
-      case 12:
-        dateStr += "Phalguna";
-        break;
-      default:
-        break;
-    }
-
-    return dateStr + " " + this._day.toString() + ", " + this._year.toString();
+    return _daysOfWeek[_weekday] +
+        ", " +
+        _months[this._month] +
+        " " +
+        this._day.toString() +
+        ", " +
+        this._year.toString();
   }
 }
