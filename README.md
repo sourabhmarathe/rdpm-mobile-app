@@ -1,6 +1,9 @@
 # rdpm-mobile-app
 Flutter based application for RDPM
 
+## About
+This repo contains the source code for a mobile app that converts dates between Gregorian and Saka calendars.
+
 ## Installing Flutter
 Go to flutter's website for information on installing flutter: https://flutter.dev/docs/get-started/install
 
