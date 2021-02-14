@@ -5,6 +5,7 @@ class SakaStruct {
   int _weekday = 0;
   bool _leap = false;
 
+  int _startYear = 78;
   List<String> _months = [
     "Chhaitra",
     "Vaishakha",
@@ -67,6 +68,10 @@ class SakaStruct {
 
   set leap(bool isLeapYear) {
     this._leap = isLeapYear;
+  }
+
+  int get startYear {
+    return this._startYear;
   }
 
   List<String> months() {

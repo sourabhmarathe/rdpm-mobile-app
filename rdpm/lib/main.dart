@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'sakaPicker.dart';
+import 'package:rdpm/SakaPickerModel.dart';
+import 'sakaPickerModel.dart';
 
 import 'calendar.dart';
 import 'sakaStruct.dart';
@@ -39,14 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
   SakaStruct selectedSakaDate = convertToSakaDate(DateTime.now());
   DateTime convertedGregorianDate = DateTime.now();
 
-  SakaPicker sakaPicker;
+  SakaPickerModel _sakaPickerModel;
 
   /*
   * indianToGregorian: bool True = Indian to Greg conversion, false otherwise
    */
   void _translateDate(BuildContext context, bool indianToGregorian) {
     setState(() {
-      if(indianToGregorian) {
+      if (indianToGregorian) {
         convertedSakaDate = convertToSakaDate(selectedGregorianDate);
       } else {
         convertedGregorianDate = convertToGregorianDate(selectedSakaDate);
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     DatePicker.showPicker(context,
                         showTitleActions: true,
-                        pickerModel: sakaPicker, onConfirm: (date) {
+                        pickerModel: _sakaPickerModel, onConfirm: (date) {
                       print('confirm $date');
                       setState(() {
                         selectedSakaDate = convertToSakaDate(date);
