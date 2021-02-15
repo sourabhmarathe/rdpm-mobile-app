@@ -15,11 +15,12 @@ class SakaPickerModel extends CommonPickerModel {
       DateTime minTime,
       LocaleType locale})
       : super(locale: locale) {
-    this.maxTime = maxTime ?? DateTime(2049, 12, 31);
-    this.minTime = minTime ?? DateTime(1970, 1, 1);
+    this.maxTime = maxTime ?? DateTime(1932, 12, 31);
+    this.minTime = minTime ?? DateTime(1972, 1, 1);
 
     int minMonth = 1;
     int minDay = 1;
+    int yearRange = 30;
 
     this.currentTime = currentTime ?? DateTime.now();
     if (currentTime != null) {
@@ -37,7 +38,7 @@ class SakaPickerModel extends CommonPickerModel {
     _fillRightLists();
 
     print(currentSakaTime);
-    setLeftIndex(this.currentSakaTime.year - this.currentSakaTime.startYear);
+    setLeftIndex(yearRange);
     setMiddleIndex(this.currentSakaTime.month - minMonth);
     setRightIndex(this.currentSakaTime.day - minDay);
   }
@@ -58,9 +59,11 @@ class SakaPickerModel extends CommonPickerModel {
   }
 
   void _fillLeftLists() {
-    int sakaOffset = 78;
-    this.leftList = List.generate(maxTime.year - minTime.year + 1, (int index) {
-      return '${minTime.year + index - sakaOffset}';
+    int minYear = this.currentSakaTime.year - 30;
+    int maxYear = this.currentSakaTime.year + 30;
+    print(maxYear);
+    this.leftList = List.generate(maxYear - minYear + 1, (int index) {
+      return '${minYear + index}';
     });
   }
 

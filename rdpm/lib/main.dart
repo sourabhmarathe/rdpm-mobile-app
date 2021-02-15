@@ -61,87 +61,91 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text("Convert to Indian Civil Date"),
-                Text("${selectedGregorianDate.toLocal()}".split(' ')[0]),
-                SizedBox(
-                  height: 20.0,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(),
                 ),
-                FlatButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2015, 1, 1),
-                          maxTime: DateTime(2025, 12, 31), onChanged: (date) {
-                        print('change $date');
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                        setState(() {
-                          selectedGregorianDate = date;
-                        });
-                      }, currentTime: DateTime.now(), locale: LocaleType.en);
-                    },
-                    child: Text(
-                      'show date time picker',
-                      style: TextStyle(color: Colors.blue),
-                    )),
-                RaisedButton(
-                  onPressed: () => _translateDate(context, true),
-                  child: Text('Translate date'),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Convert to Indian Civil Date"),
+                    Text("${selectedGregorianDate.toLocal()}".split(' ')[0]),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    FlatButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(2015, 1, 1),
+                              maxTime: DateTime(2025, 12, 31),
+                              onChanged: (date) {
+                            print('change $date');
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                            setState(() {
+                              selectedGregorianDate = date;
+                            });
+                          },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en);
+                        },
+                        child: Text(
+                          'show date time picker',
+                          style: TextStyle(color: Colors.blue),
+                        )),
+                    RaisedButton(
+                      onPressed: () => _translateDate(context, true),
+                      child: Text('Translate date'),
+                    ),
+                    Text(convertedSakaDate.toString()),
+                  ],
                 ),
-                Text(convertedSakaDate.toString()),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text("Convert to Gregorian Date"),
-                Text(selectedSakaDate.toString()),
-                SizedBox(
-                  height: 20.0,
+              ),
+              Container(
+                margin: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  border: Border.all(),
                 ),
-                FlatButton(
-                    onPressed: () {
-                      DatePicker.showPicker(context,
-                          showTitleActions: true,
-                          pickerModel: _sakaPickerModel, onConfirm: (date) {
-                        print('confirm $date');
-                        setState(() {
-                          selectedSakaDate = convertToSakaDate(date);
-                        });
-                      });
-                    },
-                    child: Text(
-                      'show date time picker',
-                      style: TextStyle(color: Colors.blue),
-                    )),
-                RaisedButton(
-                  onPressed: () => _translateDate(context, false),
-                  child: Text('Translate date'),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text("Convert to Gregorian Date"),
+                    Text(selectedSakaDate.toString()),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    FlatButton(
+                        onPressed: () {
+                          DatePicker.showPicker(context,
+                              showTitleActions: true,
+                              pickerModel: _sakaPickerModel, onConfirm: (date) {
+                            print('confirm $date');
+                            setState(() {
+                              selectedSakaDate = convertToSakaDate(date);
+                            });
+                          });
+                        },
+                        child: Text(
+                          'show date time picker',
+                          style: TextStyle(color: Colors.blue),
+                        )),
+                    RaisedButton(
+                      onPressed: () => _translateDate(context, false),
+                      child: Text('Translate date'),
+                    ),
+                    Text("${convertedGregorianDate.toLocal()}".split(' ')[0]),
+                  ],
                 ),
-                Text("${convertedGregorianDate.toLocal()}".split(' ')[0]),
-              ],
-            ),
-          ),
-        ]),
+              ),
+            ]),
       ),
     );
   }
