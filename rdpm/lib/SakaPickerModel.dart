@@ -35,9 +35,11 @@ class SakaPickerModel extends CommonPickerModel {
     _fillLeftLists();
     _fillMiddleLists();
     _fillRightLists();
+
+    print(currentSakaTime);
     setLeftIndex(this.currentSakaTime.year - this.currentSakaTime.startYear);
-    setMiddleIndex(this.currentTime.month - minMonth);
-    setRightIndex(this.currentTime.day - minDay);
+    setMiddleIndex(this.currentSakaTime.month - minMonth);
+    setRightIndex(this.currentSakaTime.day - minDay);
   }
 
   // Returns max month of a given month
@@ -56,22 +58,26 @@ class SakaPickerModel extends CommonPickerModel {
   }
 
   void _fillLeftLists() {
-    for (int ii = this.currentSakaTime.year - 5; ii < 10; ii++) {
-      this.leftList.add(ii.toString());
-    }
+    int sakaOffset = 78;
+    this.leftList = List.generate(maxTime.year - minTime.year + 1, (int index) {
+      return '${minTime.year + index - sakaOffset}';
+    });
   }
 
   void _fillMiddleLists() {
-    this.middleList = this.currentSakaTime.months();
+    List<String> months = this.currentSakaTime.months();
+    int numMonths = 12;
+    this.middleList = List.generate(numMonths, (int index) {
+      return '${months[index]}';
+    });
   }
 
   void _fillRightLists() {
-    int maxDay =
-        _maxDayOfCurrentMonth(currentMiddleIndex(), currentRightIndex());
+    int maxDay = 31;
     int minDay = 1;
-    for (int ii = minDay; ii <= maxDay; ii++) {
-      this.rightList.add(ii.toString());
-    }
+    this.rightList = List.generate(maxDay - minDay + 1, (int index) {
+      return '${minDay + index}';
+    });
   }
 
   @override
@@ -85,7 +91,7 @@ class SakaPickerModel extends CommonPickerModel {
 
   @override
   String middleStringAtIndex(int index) {
-    if (index >= 1 && index <= middleList.length) {
+    if (index >= 0 && index < middleList.length) {
       return middleList[index];
     } else {
       return null;
@@ -94,7 +100,7 @@ class SakaPickerModel extends CommonPickerModel {
 
   @override
   String rightStringAtIndex(int index) {
-    if (index >= 1 && index <= 31) {
+    if (index >= 0 && index < 31) {
       return rightList[index];
     } else {
       return null;
@@ -113,14 +119,14 @@ class SakaPickerModel extends CommonPickerModel {
 
   @override
   List<int> layoutProportions() {
-    return [4, 1, 1];
+    return [1, 1, 1];
   }
 
   @override
   DateTime finalTime() {
-    currentSakaTime.year = int.parse(leftList[currentLeftIndex()]);
-    currentSakaTime.month = int.parse(middleList[currentMiddleIndex()]);
-    currentSakaTime.day = int.parse(rightList[currentRightIndex()]);
+    currentSakaTime.year = currentLeftIndex();
+    currentSakaTime.month = currentMiddleIndex() + 1;
+    currentSakaTime.day = currentRightIndex() + 1;
     currentTime = convertToGregorianDate(currentSakaTime);
     return currentTime;
   }
