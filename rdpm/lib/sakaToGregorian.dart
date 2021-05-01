@@ -29,13 +29,13 @@ class _SakaToGregorianContainer extends State<SakaToGregorianContainer> {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text("Convert to Gregorian Date"),
-          Text(selectedSakaDate.toString()),
+          Text('Selected date: ' + selectedSakaDate.toString()),
           SizedBox(
             height: 20.0,
           ),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 DatePicker.showPicker(context,
                     showTitleActions: true,
@@ -47,16 +47,17 @@ class _SakaToGregorianContainer extends State<SakaToGregorianContainer> {
                     });
               },
               child: Text(
-                'show date time picker',
+                'Pick a date',
                 style: TextStyle(color: Colors.blue),
               )),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () => setState(() {
               convertedGregorianDate = convertToGregorianDate(selectedSakaDate);
             }),
             child: Text('Translate date'),
           ),
-          Text("${convertedGregorianDate.toLocal()}".split(' ')[0]),
+          Text('Translated date: ' +
+              "${convertedGregorianDate.toLocal()}".split(' ')[0]),
         ],
       ),
     );

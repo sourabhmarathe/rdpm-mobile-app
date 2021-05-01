@@ -14,7 +14,7 @@ class GregorianToSakaContainer extends StatefulWidget {
 
 class _GregorianToSakaContainer extends State<GregorianToSakaContainer> {
   DateTime selectedGregorianDate = DateTime.now();
-  SakaStruct convertedSakaDate;
+  SakaStruct convertedSakaDate = convertToSakaDate(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,13 @@ class _GregorianToSakaContainer extends State<GregorianToSakaContainer> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Text("Convert to Indian Civil Date"),
-          Text("${selectedGregorianDate.toLocal()}".split(' ')[0]),
+          //TODO: Standardize date format with sakaToGregorian's equivalent
+          Text('Selected date: ' +
+              "${selectedGregorianDate.toLocal()}".split(' ')[0]),
           SizedBox(
             height: 20.0,
           ),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
@@ -51,16 +52,16 @@ class _GregorianToSakaContainer extends State<GregorianToSakaContainer> {
                     locale: LocaleType.en);
               },
               child: Text(
-                'show date time picker',
+                'Pick a date',
                 style: TextStyle(color: Colors.blue),
               )),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () => setState(() {
               convertedSakaDate = convertToSakaDate(selectedGregorianDate);
             }),
             child: Text('Translate date'),
           ),
-          Text(convertedSakaDate.toString()),
+          Text('Translated date: ' + convertedSakaDate.toString()),
         ],
       ),
     );
